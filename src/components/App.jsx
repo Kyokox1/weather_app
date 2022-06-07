@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
 
 import { Aside } from "./sections/Aside/Aside";
@@ -6,8 +6,6 @@ import { WeatherCards } from "./sections/WeatherCards/WeatherCards";
 import { WeatherElements } from "./sections/WeatherElements/WeatherElements";
 
 function App() {
-	const [count, setCount] = useState(0);
-
 	return (
 		<Flex direction="row" h="100vh" color="brand.100">
 			<Aside />

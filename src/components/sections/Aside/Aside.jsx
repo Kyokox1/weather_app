@@ -8,9 +8,15 @@ import {
 	Stack,
 	Text
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
+
+import { WeatherContext } from "../../../context/Context";
 
 export const Aside = () => {
+	const { cities } = useContext(WeatherContext);
+
+	console.log(cities);
+
 	return (
 		<Stack
 			as="aside"
@@ -43,7 +49,7 @@ export const Aside = () => {
 						bottom="0"
 						right="0%"
 						left="0"
-						bgImg="/public/assets/images/Cloud-background.png"
+						bgImg="/assets/images/Cloud-background.png"
 						bgRepeat="no-repeat"
 						bgPos="center"
 						bgSize="cover"
