@@ -9,13 +9,19 @@ import {
 	Text
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
-
 import { WeatherContext } from "../../../context/Context";
 
-export const Aside = () => {
-	const { cities } = useContext(WeatherContext);
+export const Aside = ({ temp, location, sky, skyDescription }) => {
+	const { handleIconWeather } = useContext(WeatherContext);
 
-	console.log(cities);
+	temp = Math.floor(temp);
+
+	const imgWeather = handleIconWeather(sky);
+
+	// ? Pone la primera Letra de cada oración en mayúscula.
+	skyDescription = skyDescription.replace(/(^\w{1})|(\s+\w{1})/g, (letra) =>
+		letra.toUpperCase()
+	);
 
 	return (
 		<Stack
@@ -36,10 +42,7 @@ export const Aside = () => {
 				>
 					Search for places
 				</Box>
-				<IconButton
-					bgColor="brand.300"
-					isRound="true"
-				></IconButton>
+				<IconButton bgColor="brand.300" isRound="true"></IconButton>
 			</HStack>
 			<Stack flex="1" justify="space-around" color="brand.200">
 				<Box pos="relative">
@@ -56,35 +59,37 @@ export const Aside = () => {
 						filter="auto"
 						opacity="10%"
 					></Box>
-					<Image src="/assets/images/Shower.png" m="0 auto" />
+					<Image src={imgWeather} m="0 auto" />
 				</Box>
 				<Heading
 					as="h3"
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
 					color="brand.100"
 					fontSize="8xl"
 					fontWeight="500"
 				>
-					15
+					{temp}
 					<Box
+						display="inline-block"
 						as="span"
 						fontWeight="400"
 						fontSize="3xl"
 						color="brand.200"
+						ml="5px"
+						mb="-10%"
 					>
-						C
+						°C
 					</Box>
 				</Heading>
 				<Text fontWeight="600" fontSize="2xl">
-					Shower
+					{skyDescription}
 				</Text>
 				<Stack fontSize="sm">
 					<Text>Today - Friday</Text>
-					<Button
-						variant="unstyled"
-						fontSize="sm"
-						fontWeight="600"
-					>
-						Helsinki
+					<Button variant="unstyled" fontSize="sm" fontWeight="600">
+						{location}
 					</Button>
 				</Stack>
 			</Stack>
