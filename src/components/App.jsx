@@ -1,34 +1,45 @@
 // import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
 
 import { Aside } from "./sections/Aside/Aside";
 import { WeatherCards } from "./sections/WeatherCards/WeatherCards";
 import { WeatherElements } from "./sections/WeatherElements/WeatherElements";
-import React, { useEffect, useState } from "react";
+
 import { getWeather } from "../services/getWeather";
+import { useGeolocation } from "../services/useGeolocation";
 import { useWeather } from "../hooks/useWeather";
 
 function App() {
 	// const { weather } = useContext(WeatherContext);
 	const [forescast, setForescast] = useState("");
 	const [weather, setWeather] = useState("");
+	// const [coords, setCoords] = useState({});
 
-	const city = "potosi";
+	const { latitude, longitude } = useGeolocation();
+
+	let city = null;
+	if (!latitude || !longitude) city = "argentina";
 
 	useEffect(() => {
-		useWeather(city).then(setWeather);
+		useWeather({ lat: latitude, long: longitude, city }).then(setWeather);
 		getWeather(city).then(setForescast);
-	}, []);
-	// console.log(forescast);
-	// const { humidity, name, pressure, temp, visibility, wind } = weather;
+	}, [latitude, longitude]);
+
+	// useEffect(() => {
+	// setCoords({ latitude, longitude });
+	// }, [latitude, longitude]);
+
 	const humidity = weather?.humidity;
-	const name = weather?.name;
+	const region = weather?.location?.region;
+	const country = weather?.location?.country;
 	const pressure = weather?.pressure;
-	const temp = weather?.temp;
+	const tempCelsius = weather?.temp_c;
+	const tempFarenheit = weather?.temp_f;
 	const visibility = weather?.visibility;
 	const wind = weather?.wind;
-	const sky = weather?.sky;
-	const skyDescription = weather?.skyDescription;
+	const condition = weather?.condition?.text;
+	// console.log(wind);
 
 	return (
 		<Flex direction="row" h="100vh" color="brand.100">
@@ -38,10 +49,11 @@ function App() {
 			) : (
 				<>
 					<Aside
-						temp={temp}
-						location={name}
-						sky={sky}
-						skyDescription={skyDescription}
+						tempCelsius={tempCelsius}
+						tempFarenheit={tempFarenheit}
+						region={region}
+						country={country}
+						condition={condition}
 					/>
 					{/* Main */}
 					<Stack

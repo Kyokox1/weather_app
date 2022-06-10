@@ -1,15 +1,15 @@
 const options = {
 	method: "GET",
 	headers: {
-		"X-RapidAPI-Host": "community-open-weather-map.p.rapidapi.com",
-		"X-RapidAPI-Key": import.meta.env.VITE_API_KEY
+		"X-RapidAPI-Key": import.meta.env.VITE_API_KEY,
+		"X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
 	}
 };
 
 export const getWeather = async (city) => {
 	try {
 		const response = await fetch(
-			`https://community-open-weather-map.p.rapidapi.com/forecast?q=${city}&units=metric`,
+			`https://weatherapi-com.p.rapidapi.com/forecast.json?q=${city}&days=3`,
 			options
 		);
 		const data = await response.json();

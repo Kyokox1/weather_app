@@ -1,21 +1,36 @@
 const options = {
 	method: "GET",
 	headers: {
-		"X-RapidAPI-Host": "community-open-weather-map.p.rapidapi.com",
-		"X-RapidAPI-Key": import.meta.env.VITE_API_KEY
+		"X-RapidAPI-Key": import.meta.env.VITE_API_KEY,
+		"X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
 	}
 };
 
-export const getCurrentWeather = async (city) => {
+export const getCurrentWeather = async ({ lat, long, city }) => {
 	try {
-		const response = await fetch(
-			`https://community-open-weather-map.p.rapidapi.com/weather?q=${city}&units=metric`,
-			options
-		);
-		const data = await response.json();
-		// console.log(data)
-		return data;
+		if (!lat || !long) {
+			const response = await fetch(
+				`https://weatherapi-com.p.rapidapi.com/current.json?q=${city}`,
+				options
+			);
+			const data = await response.json();
+			// console.log(data)
+			return data;
+		}
+
+		if (!city) {
+			const response = await fetch(
+				`https://weatherapi-com.p.rapidapi.com/current.json?q=${lat}%2C${long}`,
+				options
+			);
+			const data = await response.json();
+			// console.log(data)
+			return data;
+		}
 	} catch (error) {
 		console.log(error);
 	}
 };
+
+// -19.5676964 lat
+// -65.7690572 long

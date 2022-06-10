@@ -1,6 +1,5 @@
 import {
 	Box,
-	Button,
 	Heading,
 	HStack,
 	IconButton,
@@ -11,17 +10,15 @@ import {
 import React, { useContext } from "react";
 import { WeatherContext } from "../../../context/Context";
 
-export const Aside = ({ temp, location, sky, skyDescription }) => {
+export const Aside = ({ tempCelsius, region, country, condition }) => {
 	const { handleIconWeather } = useContext(WeatherContext);
 
-	temp = Math.floor(temp);
-
-	const imgWeather = handleIconWeather(sky);
+	const imgWeather = handleIconWeather(condition);
 
 	// ? Pone la primera Letra de cada oración en mayúscula.
-	skyDescription = skyDescription.replace(/(^\w{1})|(\s+\w{1})/g, (letra) =>
-		letra.toUpperCase()
-	);
+	// skyDescription = skyDescription.replace(/(^\w{1})|(\s+\w{1})/g, (letra) =>
+	// 	letra.toUpperCase()
+	// );
 
 	return (
 		<Stack
@@ -70,7 +67,7 @@ export const Aside = ({ temp, location, sky, skyDescription }) => {
 					fontSize="8xl"
 					fontWeight="500"
 				>
-					{temp}
+					{tempCelsius}
 					<Box
 						display="inline-block"
 						as="span"
@@ -84,13 +81,13 @@ export const Aside = ({ temp, location, sky, skyDescription }) => {
 					</Box>
 				</Heading>
 				<Text fontWeight="600" fontSize="2xl">
-					{skyDescription}
+					{condition}
 				</Text>
 				<Stack fontSize="sm">
 					<Text>Today - Friday</Text>
-					<Button variant="unstyled" fontSize="sm" fontWeight="600">
-						{location}
-					</Button>
+					<Box padding={2} fontSize="sm" fontWeight="600">
+						{region} - {country}
+					</Box>
 				</Stack>
 			</Stack>
 		</Stack>

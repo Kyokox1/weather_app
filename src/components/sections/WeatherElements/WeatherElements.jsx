@@ -3,9 +3,9 @@ import React from "react";
 
 export const WeatherElements = ({ humidity, wind, visibility, pressure }) => {
 	const weatherParameters = [
-		{ name: "Wind status", value: wind.speed, unit: "km/h" },
+		{ name: "Wind status", value: wind, unit: "km/h" },
 		{ name: "Humidity", value: humidity, unit: "%" },
-		{ name: "Visibility", value: visibility, unit: "m" },
+		{ name: "Visibility", value: visibility, unit: "km" },
 		{ name: "Air Pressure", value: pressure, unit: "mb" }
 	];
 

@@ -4,7 +4,8 @@ export const WeatherContext = createContext();
 
 export const WeatherProvider = ({ children }) => {
 	const handleIconWeather = (icon) => {
-		if (icon === "Clear") return "/assets/images/Clear.png";
+		if (icon === "Clear" || icon === "Sunny")
+			return "/assets/images/Clear.png";
 		if (icon === "Hail") return "/assets/images/Hail.png";
 		if (icon === "Clouds") return "/assets/images/HeavyCloud.png";
 		if (icon === "HeavyRain" || icon === "Rain")
