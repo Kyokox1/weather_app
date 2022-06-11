@@ -5,46 +5,46 @@ import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
 import { Aside } from "./sections/Aside/Aside";
 import { WeatherCards } from "./sections/WeatherCards/WeatherCards";
 import { WeatherElements } from "./sections/WeatherElements/WeatherElements";
-
-import { getWeather } from "../services/getWeather";
-import { useGeolocation } from "../services/useGeolocation";
 import { useWeather } from "../hooks/useWeather";
+import { useGeolocation } from "../services/useGeolocation";
 
 function App() {
-	// const { weather } = useContext(WeatherContext);
-	const [forescast, setForescast] = useState("");
-	const [weather, setWeather] = useState("");
-	// const [coords, setCoords] = useState({});
+	const [initialCoords, setInitialCoords] = useState({
+		lat: 19.5676964,
+		long: 65.7690572,
+		city: "argentina"
+	});
 
-	const { latitude, longitude } = useGeolocation();
-
-	let city = null;
-	if (!latitude || !longitude) city = "argentina";
+	const [weather] = useWeather({ lat: -19.5676964, long: -65.7690572 });
+	const [userLocation, setUserLocation] = useGeolocation();
+	const { latitude, longitude } = userLocation;
 
 	useEffect(() => {
-		useWeather({ lat: latitude, long: longitude, city }).then(setWeather);
-		getWeather(city).then(setForescast);
-	}, [latitude, longitude]);
+		setInitialCoords({ lat: latitude, long: longitude, city: "argentina" });
+	}, [userLocation]);
+	// console.log(initialCoords);
 
-	// useEffect(() => {
-	// setCoords({ latitude, longitude });
-	// }, [latitude, longitude]);
+	const { current, location } = weather;
 
-	const humidity = weather?.humidity;
-	const region = weather?.location?.region;
-	const country = weather?.location?.country;
-	const pressure = weather?.pressure;
-	const tempCelsius = weather?.temp_c;
-	const tempFarenheit = weather?.temp_f;
-	const visibility = weather?.visibility;
-	const wind = weather?.wind;
-	const condition = weather?.condition?.text;
-	// console.log(wind);
+	const humidity = current?.humidity;
+	const pressure = current?.pressure_mb;
+	const tempCelsius = current?.temp_c;
+	const tempFarenheit = current?.temp_f;
+	const wind = current?.wind_kph;
+	const visibility = current?.vis_km;
+	const condition = current?.condition.text;
+
+	const region = location?.region;
+	const country = location?.country;
+
+	// console.log(tempFarenheit);
+	// console.log(latitude, longitude);
+	// console.log(weather);
 
 	return (
 		<Flex direction="row" h="100vh" color="brand.100">
 			{/* Verificando si el objeto que trae weather esta vacio  */}
-			{!forescast || !weather ? (
+			{!weather ? (
 				<Heading bgColor="brand.600">Loading....</Heading>
 			) : (
 				<>

@@ -14,7 +14,7 @@ export const getCurrentWeather = async ({ lat, long, city }) => {
 				options
 			);
 			const data = await response.json();
-			// console.log(data)
+			// console.log(data);
 			return data;
 		}
 
@@ -24,7 +24,6 @@ export const getCurrentWeather = async ({ lat, long, city }) => {
 				options
 			);
 			const data = await response.json();
-			// console.log(data)
 			return data;
 		}
 	} catch (error) {

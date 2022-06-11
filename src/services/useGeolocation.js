@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 
+const options = {
+	enableHighAccuracy: true,
+	timeout: 5000,
+	maximumAge: 0
+};
 export const useGeolocation = () => {
-	const [location, setLocation] = useState({});
-
-	const options = {
-		enableHighAccuracy: true,
-		timeout: 5000,
-		maximumAge: 0
-	};
+	const [userLocation, setUserLocation] = useState("");
 
 	const sucess = (position) => {
 		const { coords } = position;
-		setLocation(coords);
+		// console.log(coords);
+		setUserLocation(coords);
 	};
 
 	const error = (err) => {
@@ -21,6 +21,7 @@ export const useGeolocation = () => {
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(sucess, error, options);
 	}, []);
+	// console.log(userLocation);
 
-	return location;
+	return [userLocation, setUserLocation];
 };

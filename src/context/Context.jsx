@@ -11,7 +11,8 @@ export const WeatherProvider = ({ children }) => {
 		if (icon === "HeavyRain" || icon === "Rain")
 			return "/assets/images/HeavyRain.png";
 		if (icon === "LightCloud") return "/assets/images/LightCloud.png";
-		if (icon === "LightRain") return "/assets/images/LightRain.png";
+		if (icon === "LightRain" || icon === "Patchy rain possible")
+			return "/assets/images/LightRain.png";
 		if (icon === "Shower") return "/assets/images/Shower.png";
 		if (icon === "Sleet") return "/assets/images/Sleet.png";
 		if (icon === "Snow") return "/assets/images/Snow.png";
