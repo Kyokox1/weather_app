@@ -9,19 +9,15 @@ import { useWeather } from "../hooks/useWeather";
 import { useGeolocation } from "../services/useGeolocation";
 
 function App() {
-	const [initialCoords, setInitialCoords] = useState({
-		lat: 19.5676964,
-		long: 65.7690572,
-		city: "argentina"
-	});
+	// const [initialCoords, setInitialCoords] = useState({});
 
-	const [weather] = useWeather({ lat: -19.5676964, long: -65.7690572 });
 	const [userLocation, setUserLocation] = useGeolocation();
 	const { latitude, longitude } = userLocation;
+	const [weather] = useWeather({ lat: latitude, long: longitude });
 
-	useEffect(() => {
-		setInitialCoords({ lat: latitude, long: longitude, city: "argentina" });
-	}, [userLocation]);
+	// useEffect(() => {
+	// 	setInitialCoords({ lat: latitude, long: longitude });
+	// }, [userLocation]);
 	// console.log(initialCoords);
 
 	const { current, location } = weather;

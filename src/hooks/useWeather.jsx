@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCurrentWeather } from "../services/getCurrentWeather";
 
-export const useWeather = ({ lat, long, city }) => {
+export const useWeather = ({ lat = 19.5676964, long = 65.7690572, city }) => {
 	const [weather, setWeather] = useState("");
 
 	useEffect(() => {
@@ -14,7 +14,7 @@ export const useWeather = ({ lat, long, city }) => {
 			}
 		};
 		loadData();
-	}, []);
+	}, [lat, long, city]);
 
 	return [weather, setWeather];
 };
