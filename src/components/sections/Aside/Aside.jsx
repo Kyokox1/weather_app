@@ -8,6 +8,7 @@ import {
 	Text
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
+
 import { WeatherContext } from "../../../context/Context";
 
 export const Aside = ({ tempCelsius, region, country, condition }) => {

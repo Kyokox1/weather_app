@@ -10,7 +10,7 @@ export const getCurrentWeather = async ({ lat, long, city }) => {
 	try {
 		if (!city) {
 			const response = await fetch(
-				`https://weatherapi-com.p.rapidapi.com/current.json?q=${lat}%2C${long}`,
+				`https://weatherapi-com.p.rapidapi.com/forecast.json?q=${lat}%2C${long}&days=3`,
 				options
 			);
 			const data = await response.json();
@@ -18,7 +18,7 @@ export const getCurrentWeather = async ({ lat, long, city }) => {
 		}
 
 		const response = await fetch(
-			`https://weatherapi-com.p.rapidapi.com/current.json?q=${city}`,
+			`https://weatherapi-com.p.rapidapi.com/forecast.json?q=${city}&days=3`,
 			options
 		);
 		const data = await response.json();

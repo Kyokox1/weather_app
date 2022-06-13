@@ -1,5 +1,5 @@
 // import React, { useContext } from "react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
 
 import { Aside } from "./sections/Aside/Aside";
@@ -9,19 +9,15 @@ import { useWeather } from "../hooks/useWeather";
 import { useGeolocation } from "../services/useGeolocation";
 
 function App() {
-	// const [initialCoords, setInitialCoords] = useState({});
-
-	const [userLocation, setUserLocation] = useGeolocation();
+	// ? obteniendo coordenadas
+	const [userLocation] = useGeolocation();
 	const { latitude, longitude } = userLocation;
+
 	const [weather] = useWeather({ lat: latitude, long: longitude });
+	// ? Destructurando el weather
+	const { current, location, forecast } = weather;
 
-	// useEffect(() => {
-	// 	setInitialCoords({ lat: latitude, long: longitude });
-	// }, [userLocation]);
-	// console.log(initialCoords);
-
-	const { current, location } = weather;
-
+	// ? Destructurando el current
 	const humidity = current?.humidity;
 	const pressure = current?.pressure_mb;
 	const tempCelsius = current?.temp_c;
@@ -30,8 +26,23 @@ function App() {
 	const visibility = current?.vis_km;
 	const condition = current?.condition.text;
 
+	// ? Destructurando el location
 	const region = location?.region;
 	const country = location?.country;
+
+	// ?forecast
+	if (forecast === undefined) return;
+
+	const { forecastday } = forecast;
+	// const days = forecastday.map((el) => ({
+	// 	day: el.day,
+	// 	hours: el.hour,
+	// 	date: el.date
+	// }));
+
+	// console.log(days);
+
+	// console.log(forecastday);
 
 	// console.log(tempFarenheit);
 	// console.log(latitude, longitude);
@@ -80,7 +91,7 @@ function App() {
 							</Box>
 						</Stack>
 						{/* Weather Cards */}
-						<WeatherCards />
+						<WeatherCards forecastday={forecastday} />
 						{/* Weather elements */}
 						<WeatherElements
 							humidity={humidity}

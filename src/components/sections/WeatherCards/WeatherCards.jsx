@@ -1,29 +1,25 @@
+import React from "react";
 import { Flex } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useForescast } from "../../../hooks/useForescast";
+
 import { WeatherCardItem } from "./WeatherCardItem/WeatherCardItem";
 
-export const WeatherCards = () => {
-	const [forescast, setForescast] = useState("");
-
-	const city = "potosi";
-
-	useEffect(() => {
-		useForescast(city).then(setForescast);
-	}, []);
-
-	const forescastDay = forescast?.list?.[0];
-	// const dateForescast = forescastDay?.dt;
-	const date = forescastDay?.dt_txt;
-	const dateForescast = date?.split(" ")?.[0];
-
+export const WeatherCards = ({ forecastday }) => {
 	return (
 		<Flex direction="row" gap={5} justify="space-between">
-			{Array(5)
-				.fill("")
-				.map((el, i) => (
-					<WeatherCardItem key={i} date={dateForescast} />
-				))}
+			{!forecastday ? (
+				<span>Loading...</span>
+			) : (
+				forecastday.map((forecast) => (
+					<WeatherCardItem
+						key={forecast.date}
+						date={forecast.date}
+						maxCelsius={forecast.day.maxtemp_c}
+						minCelsius={forecast.day.mintemp_c}
+						// icon={forecast.day.condition.icon}
+						icon={forecast.day.condition.text}
+					/>
+				))
+			)}
 		</Flex>
 	);
 };
